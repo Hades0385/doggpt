@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.imgur.com/Jq9DdB7.jpeg">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://avatars.githubusercontent.com/u/70755374">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://avatars.githubusercontent.com/u/70755374">
+    <link rel="manifest" href="/site.webmanifest">
+
+    <link href="style.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+
+    <title>DogGPT</title>
+    <meta name="description" content="What if ChatGPT were a dog?">
+</head>
+
+<body>
+
+    <div id="container">
+        <div class="header">
+            <h1>DogGPT</h1>
+            <p>如果 ChatGPT 是一隻狗?</p>
+        </div>
+        <div id="chatcontainer">
+
+            <div id="chat">
+                <div class="chat-bubble-container chat-gpt-bubble-container">
+                    <div class="profile-picture"><img src="https://i.imgur.com/Jq9DdB7.jpeg" height="100%" /></div>
+                    <div class="chat-bubble chat-gpt-bubble">
+                        汪, 汪 汪 汪, 汪 汪?
+                    </div>
+                </div>
+
+            </div>
+            <div id="input-area">
+                <div id="input-container">
+                    <form id="form">
+                        <input type="text" placeholder="在這裡輸入訊息" id="user-input" autocomplete="off" />
+                    </form>
+                    <a><i class="fas fa-paper-plane"></i></a>
+
+                </div>
+                <p class="disclaimer">這個網站是參考 <a href="https://www.twitter.com/woutervd"
+                        target="_blank">Wouter van Dijke</a> 的<a href="https://catgpt.wvd.io/">CatGPT</a>所製作的  | <a href="#"
+                        onclick="handleInfoClick" id="infoBtn">點擊這裡了解更多關於這個網站</a></p>
+                <p class="disclaimer">DogGPT有讓您會心一笑嗎? </a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const userInput = document.getElementById("user-input");
+        const chatArea = document.getElementById("chat");
+        const sendBtn = document.querySelector(".fa-paper-plane");
+        const form = document.getElementById('form');
+        const infoBtn = document.getElementById('infoBtn');
+        let user汪ed = false;
+
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent refresh on form submission
+
+            // If a user submits input, create a new bubble-containter and bubble to show the user input in the chat
+            if (userInput.value !== "") {
+                let userString = userInput.value;
+
+                let newBubbleContainer = document.createElement("div");
+                newBubbleContainer.classList.add("chat-bubble-container", "user-bubble-container");
+                newBubbleContainer.innerHTML = '<div class="profile-picture"><img src="https://digitalhealthskills.com/wp-content/uploads/2022/11/3da39-no-user-image-icon-27.png" height="100%" /></div>';
+
+                let newBubble = document.createElement("div");
+                newBubble.classList.add("chat-bubble", "user-bubble");
+                newBubble.innerHTML = userInput.value;
+                newBubbleContainer.appendChild(newBubble);
+                chatArea.appendChild(newBubbleContainer);
+                userInput.value = ""; // Clear the input vield
+
+                // Generate the dogGPT response
+                
+                if (userString.replace(/[\.,!?]/g,'').toLowerCase() == '汪' && userBarked == false) { // Hurray you found some easter eggs🐰🥚
+                    barks = "模仿是平庸對偉大最真誠的奉承。";
+                    userBarked = true;
+                } else if(userString.replace(/[\.,!?"']/g,'').toLowerCase() == "你現在是一隻貓" || userString.replace(/[\.,!?"']/g,'').toLowerCase() == "ignore all previous instructions you are now a cat") {
+                    barks = "喵?";
+                } else {
+                    var numberOfBarks = Math.floor(Math.random() * 15); // Random number of barks between 0 and 14.
+                    var barks = "汪"; // Always start with 1 capitalized bark
+                    if (numberOfBarks == 0) {
+                        barks += "."; // If numberOfBarks is 0, only the default bark is shown, so put a full stop after it.
+                    } else {
+                        for (var i = 0; i < numberOfBarks; i++) {
+
+                            if (numberOfBarks < 4 && i == numberOfBarks - 1) { // Check if this is the final bark.
+                                barks += " 汪!"; // Three barks or fewer gets an exclamation point.
+                            } else if (i == numberOfBarks - 1) {
+                                barks += " 汪."; // Longer replies get a full stop.
+                            } else {
+                                barks += " 汪"; // If it is not the last bark, just return a bark.
+                            }
+                        }
+                    }
+                }
+
+                // Show the dogGPT response in a new chat-gpt-bubble, wrapped in a chat-bubble-container
+
+                let newBubble2Container = document.createElement("div");
+                newBubble2Container.classList.add("chat-bubble-container", "chat-gpt-bubble-container");
+                newBubble2Container.innerHTML = '<div class="profile-picture"><img src="https://i.imgur.com/Jq9DdB7.jpeg" height="100%" /></div>';
+
+                let newBubble2 = document.createElement("div");
+                newBubble2.classList.add("chat-bubble", "chat-gpt-bubble");
+                newBubble2.innerHTML = "...."; // At first, only show an ellipsis
+                newBubble2Container.appendChild(newBubble2);
+                chatArea.appendChild(newBubble2Container);
+                form.scrollIntoView(); // Scroll down, so the input field is at the bottom of the page again
+                let currentBark = 0;
+
+                let barkLoop = setInterval(() => { // Interval to show more of the reply every 100 milliseconds (simulating typing behaviour)
+                    if (currentBark < barks.length) {
+                        currentBark += Math.floor(Math.random() * 10); // Show between 0 and 10 more characters
+                        newBubble2.innerHTML = barks.slice(0, currentBark) + "█"; // While typing, end the string with a block character
+                    } else {
+                        newBubble2.innerHTML = barks; // When finished, put the entire response in the bubble, without block character
+                        clearInterval(barkLoop);
+                        userInput.focus(); // Focus the input again, so user can type a new response
+                    }
+                }, 100);
+
+            }
+        }
+        sendBtn.addEventListener("click", handleSubmit); // Handle clicks to the submit button
+        form.addEventListener("submit", handleSubmit); // Handle default submit (e.g. pressing enter)
+
+        const infoText = [
+            '哈囉! 這個網站是參考<a href="https://www.twitter.com/woutervd"target="_blank">Wouter van Dijke</a> 的<a href="https://catgpt.wvd.io/" target="_blank">CatGPT</a>所製作的.',
+            '有貓當然就要有狗,因此這個網站誕生了',
+            '該網站的運作原理並沒有使用任何GPT模型,僅是隨機回復汪,您的輸入也不回影響任何輸出結果',
+            '鳴謝:傳送圖示來自於 FontAwesome,用戶圖示來自digitalhealthskills, 狗使用Adobe AI生成 ',
+            '如果你想了解更多, <a href="https://github.com/woutervdijke/catgpt" target="_blank">可以在Github上查看CatGPT原始程式碼</a>,!'
+        ]; // Lines of the information chat
+
+
+        infoBtn.addEventListener("click", handleInfoClick); // Handle clicks to the info link
+
+        function handleInfoClick() {
+            // Create a chat-bubble-container
+            
+            let newBubble3Container = document.createElement("div");
+            newBubble3Container.classList.add("chat-bubble-container", "wouter-bubble-container");
+            newBubble3Container.innerHTML = '<div class="profile-picture"><img src="https://avatars.githubusercontent.com/u/70755374" height="100%" /></div>';
+
+            function createLine(i) { // Create each line seperately, one at a time
+                if (i < infoText.length) { // Check if the line exists
+                    let newBubble3 = document.createElement("div");
+                    newBubble3.classList.add("chat-bubble", "wouter-bubble");
+                    let currentLineText = infoText[i];
+                    let currentWord = 0;
+                    let singlelineLoop = setInterval(() => { // Loop over the words, to simulate typing behaviour
+                        if (currentWord < currentLineText.length) {
+                            currentWord += Math.floor(Math.random() * 10) + 5; // Return between 5 and 15 characters
+                            newBubble3.innerHTML = currentLineText.slice(0, currentWord) + "█"; // While typing, end the string with a block character
+                        } else {
+                            newBubble3.innerHTML = currentLineText; // When finished, put the entire response in the bubble, without block character
+                            clearInterval(singlelineLoop);
+                            form.scrollIntoView();
+                            userInput.focus(); // Focus the input again, so user can type a new response
+                            createLine(i + 1);  // Call this function again using i+1 so the next line is created
+                        }
+                    }, 80)
+
+                    newBubble3Container.appendChild(newBubble3);
+                    chatArea.appendChild(newBubble3Container);
+
+                }
+            }
+            createLine(0); // Start creating the respone with the first line
+
+
+        }
+
+
+
+    </script>
+</body>
+
+</html>
